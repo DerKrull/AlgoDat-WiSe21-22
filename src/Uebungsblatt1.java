@@ -120,50 +120,50 @@ public class Uebungsblatt1 {
                 }
                 return arr;
         }
-        public static int[] mergeSort(int[] arr, int p, int r) {
-                if (p < r) {
+        public static int[] mergeSort(int[] arr, int startSort, int endSort) {
+                if (startSort < endSort) {
                         Analysis.addComparison();
-                        int q = (p + r) / 2;
-                        mergeSort(arr, p, q);
-                        mergeSort(arr, q+1, r);
-                        merge(arr,p,q,r);
+                        int q = (startSort + endSort) / 2;
+                        mergeSort(arr, startSort, q);
+                        mergeSort(arr, q+1, endSort);
+                        merge(arr,startSort,q,endSort);
                 }
                 return arr;
         }
 
-        public static int[] merge(int[] arr, int p, int q, int r) {
-                int n = q - p + 1;
-                int m = r - q;
-                int[] L = new int[n+1];
+        public static int[] merge(int[] arr, int startFirstArray, int endFirstArray, int endSecondArray) {
+                int lengthFirstArray = endFirstArray - startFirstArray + 1;
+                int lengthSecondArray = endSecondArray - endFirstArray;
+                int[] FirstArray = new int[lengthFirstArray+1];
                 Analysis.addArrayAccess();
-                int[] R = new int[m+1];
+                int[] SecondArray = new int[lengthSecondArray+1];
                 Analysis.addArrayAccess();
                 int i = 0;
                 int j = 0;
-                for (i = 0; i < n; i++) {
+                for (i = 0; i < lengthFirstArray; i++) {
                         Analysis.addArrayAccess();
-                        L[i] = arr[p+i];
+                        FirstArray[i] = arr[startFirstArray+i];
                 }
-                for (j = 0; j < m; j++) {
+                for (j = 0; j < lengthSecondArray; j++) {
                         Analysis.addArrayAccess();
-                        R[j] = arr[q+1+j];
+                        SecondArray[j] = arr[endFirstArray+1+j];
                 }
-                L[n] = Integer.MAX_VALUE;
+                FirstArray[lengthFirstArray] = Integer.MAX_VALUE;
                 Analysis.addArrayAccess();
-                R[m] = Integer.MAX_VALUE;
+                SecondArray[lengthSecondArray] = Integer.MAX_VALUE;
                 Analysis.addArrayAccess();
                 i = 0;
                 j = 0;
-                for(int k = p; k <= r; k++) {
+                for(int k = startFirstArray; k <= endSecondArray; k++) {
                         Analysis.addArrayAccess();
-                        if (L[i] <= R[j]) {
+                        if (FirstArray[i] <= SecondArray[j]) {
                                 Analysis.addComparison();
-                                arr[k] = L[i];
+                                arr[k] = FirstArray[i];
                                 Analysis.addArrayAccess();
                                 i++;
                         } else {
                                 Analysis.addComparison();
-                                arr[k] = R[j];
+                                arr[k] = SecondArray[j];
                                 Analysis.addArrayAccess();
                                 j++;
                         }
