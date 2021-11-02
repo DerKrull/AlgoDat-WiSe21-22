@@ -28,7 +28,7 @@ public class Analysis {
     }
 
     public static void printData() {
-        System.out.println("Laufzeit: " + time + " ns");
+        System.out.println("Laufzeit: " + (double) time/1000 + " ms");
         System.out.println("Comparisons: " + comparisons);
         System.out.println("Array accesses: " + arrayAccess);
     }
