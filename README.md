@@ -21,8 +21,11 @@ Array-Zugriffe und Vergleiche zu zählen.
   
 - Übungsblatt 2
   - Quick Sort
+    - Partition
   - Randomized Quick Sort
+    - Randomized Partition
   - Customized Randomized Quick Sort
+    - Customized Randomized Partition
   - Merge Sort (for Comparison)
   - Auto-generate needed Arrays
   
