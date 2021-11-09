@@ -97,7 +97,7 @@ public class Uebungsblatt2 {
 
     public static int randomizedPartition(int[] A, int p, int r) {
         Random randomNum = new Random();
-        int i = randomNum.nextInt(p,r);
+        int i = randomNum.nextInt(r);
         int temp = A[i];
         A[i] = A[r];
         A[r] = temp;
@@ -117,7 +117,7 @@ public class Uebungsblatt2 {
 
     public static int customRandomizedPartition(int[] A, int p, int r) {
         Random randomNum = new Random();
-        int[] medArr = {A[randomNum.nextInt(p, r)], A[randomNum.nextInt(p, r)], A[randomNum.nextInt(p, r)]};
+        int[] medArr = {A[randomNum.nextInt(r)], A[randomNum.nextInt(r)], A[randomNum.nextInt(r)]};
         Arrays.sort(medArr);
         int i = medArr[1];
         int temp = A[i];
