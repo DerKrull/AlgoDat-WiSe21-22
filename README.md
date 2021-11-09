@@ -14,24 +14,24 @@ Array-Zugriffe und Vergleiche zu zählen.
 - Übungsblatt 1
   - Linear Search
   - Binary Search
-  - **Insertion Sort
-  - **Merge Sort
+  - **Insertion Sort**
+  - **Merge Sort**
   - Bubble Sort
   - Auto-generate needed Arrays
   
 - Übungsblatt 2
-  - **Quick Sort
+  - **Quick Sort**
     - Partition
-  - **Randomized Quick Sort
+  - **Randomized Quick Sort**
     - Randomized Partition
   - Customized Randomized Quick Sort
     - Customized Randomized Partition
-  - *Merge Sort (for Comparison)
+  - *Merge Sort (for Comparison)*
   - Auto-generate needed Arrays
   
 - Übungsblatt 3
-  - **Counting Sort
-  - **Radix Sort
+  - **Counting Sort**
+  - **Radix Sort**
     - Radix-Counting Sort (customized to use with Radix Sort)
-  - *Quick Sort (for Comparison)
+  - *Quick Sort (for Comparison)*
   - Auto-generate needed Arrays (added Bottom Barrier to generate Numbers with the same length)
