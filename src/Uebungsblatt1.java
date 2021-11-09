@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Random;
 
 public class Uebungsblatt1 {
@@ -7,32 +6,34 @@ public class Uebungsblatt1 {
                 int[] sortArray = generateArray(1000,2000, true);
                 int[] searchArray;
                 int key = new Random().nextInt(50);
-                //System.out.println(Arrays.toString(sortArray));
-                //System.out.println("Key: " + key);
+                /* Kommentar
+                System.out.println(Arrays.toString(sortArray));
+                System.out.println("Key: " + key);
+                */
 
-                System.out.println("");
+                System.out.println();
 
                 System.out.println("--- Insertion Sort ---");
                 Analysis.clearData();
                 Analysis.startTime();
-                searchArray = insertionSort(sortArray);
+                insertionSort(sortArray);
                 //System.out.println("Sortiert: " + Arrays.toString(searchArray));
                 Analysis.stopTime();
                 Analysis.printData();
                 Analysis.clearData();
 
-                System.out.println("");
+                System.out.println();
 
                 System.out.println("--- Merge Sort ---");
                 Analysis.clearData();
                 Analysis.startTime();
-                searchArray = mergeSort(sortArray, 0, sortArray.length-1);
+                mergeSort(sortArray, 0, sortArray.length - 1);
                 //System.out.println("Sortiert: " + Arrays.toString(searchArray));
                 Analysis.stopTime();
                 Analysis.printData();
                 Analysis.clearData();
 
-                System.out.println("");
+                System.out.println();
 
                 System.out.println("--- Bubble Sort ---");
                 Analysis.clearData();
@@ -43,7 +44,7 @@ public class Uebungsblatt1 {
                 Analysis.printData();
                 Analysis.clearData();
 
-                System.out.println("");
+                System.out.println();
 
                 System.out.println("--- Linear Search ---");
                 Analysis.clearData();
@@ -53,7 +54,7 @@ public class Uebungsblatt1 {
                 Analysis.printData();
                 Analysis.clearData();
 
-                System.out.println("");
+                System.out.println();
 
                 System.out.println("--- Binary Search ---");
                 Analysis.clearData();
@@ -102,7 +103,7 @@ public class Uebungsblatt1 {
                 }
         }
 
-        public static int[] insertionSort (int[] arr) {
+        public static void insertionSort (int[] arr) {
                 for (int j = 1; j < arr.length; j++) {
                         int key = arr[j];
                         Analysis.addArrayAccess();
@@ -118,7 +119,6 @@ public class Uebungsblatt1 {
                         arr[i+1] = key;
                         Analysis.addArrayAccess();
                 }
-                return arr;
         }
         public static int[] mergeSort(int[] arr, int startSort, int endSort) {
                 if (startSort < endSort) {
@@ -131,15 +131,15 @@ public class Uebungsblatt1 {
                 return arr;
         }
 
-        public static int[] merge(int[] arr, int startFirstArray, int endFirstArray, int endSecondArray) {
+        public static void merge(int[] arr, int startFirstArray, int endFirstArray, int endSecondArray) {
                 int lengthFirstArray = endFirstArray - startFirstArray + 1;
                 int lengthSecondArray = endSecondArray - endFirstArray;
                 int[] FirstArray = new int[lengthFirstArray+1];
                 Analysis.addArrayAccess();
                 int[] SecondArray = new int[lengthSecondArray+1];
                 Analysis.addArrayAccess();
-                int i = 0;
-                int j = 0;
+                int i;
+                int j;
                 for (i = 0; i < lengthFirstArray; i++) {
                         Analysis.addArrayAccess();
                         FirstArray[i] = arr[startFirstArray+i];
@@ -157,18 +157,15 @@ public class Uebungsblatt1 {
                 for(int k = startFirstArray; k <= endSecondArray; k++) {
                         Analysis.addArrayAccess();
                         if (FirstArray[i] <= SecondArray[j]) {
-                                Analysis.addComparison();
                                 arr[k] = FirstArray[i];
-                                Analysis.addArrayAccess();
                                 i++;
                         } else {
-                                Analysis.addComparison();
                                 arr[k] = SecondArray[j];
-                                Analysis.addArrayAccess();
                                 j++;
                         }
+                        Analysis.addComparison();
+                        Analysis.addArrayAccess();
                 }
-                return arr;
         }
 
         public static int[] bubbleSort(int[] arr) {

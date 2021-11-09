@@ -4,62 +4,60 @@ import java.util.Random;
 public class Uebungsblatt2 {
     public static void main(String[] args) {
         int[] sortArray = generateArray(10000,5000, false);
-        int[] sortedArray;
         System.out.println(Arrays.toString(sortArray));
 
-        System.out.println("");
+        System.out.println();
 
         System.out.println("--- Quick Sort ---");
         Analysis.clearData();
         Analysis.startTime();
-        sortedArray = quicksort(sortArray,0,sortArray.length-1);
+        quicksort(sortArray, 0, sortArray.length - 1);
         //System.out.println("Sortiert: " + Arrays.toString(searchArray));
         Analysis.stopTime();
         Analysis.printData();
         Analysis.clearData();
 
-        System.out.println("");
+        System.out.println();
 
         System.out.println("--- Randomized-Quick Sort ---");
         Analysis.clearData();
         Analysis.startTime();
-        sortedArray = randomizedQuicksort(sortArray,0,sortArray.length-1);
+        randomizedQuicksort(sortArray, 0, sortArray.length - 1);
         //System.out.println("Sortiert: " + Arrays.toString(searchArray));
         Analysis.stopTime();
         Analysis.printData();
         Analysis.clearData();
 
-        System.out.println("");
+        System.out.println();
 
         System.out.println("--- Custom-Randomized-Quick Sort ---");
         Analysis.clearData();
         Analysis.startTime();
-        sortedArray = customRandomizedQuicksort(sortArray,0,sortArray.length-1);
+        customRandomizedQuicksort(sortArray, 0, sortArray.length - 1);
         //System.out.println("Sortiert: " + Arrays.toString(searchArray));
         Analysis.stopTime();
         Analysis.printData();
         Analysis.clearData();
 
-        System.out.println("");
+        System.out.println();
 
         System.out.println("--- Merge Sort ---");
         Analysis.clearData();
         Analysis.startTime();
-        sortedArray = Uebungsblatt1.mergeSort(sortArray,0,sortArray.length-1);
+        Uebungsblatt1.mergeSort(sortArray, 0, sortArray.length - 1);
         //System.out.println("Sortiert: " + Arrays.toString(searchArray));
         Analysis.stopTime();
         Analysis.printData();
         Analysis.clearData();
     }
 
-    public static int[] quicksort(int[] A, int p, int r) {
+    public static void quicksort(int[] A, int p, int r) {
         if (p < r) {
             Analysis.addComparison();
             int q = partition(A,p,r);
             quicksort(A,p,q-1);
             quicksort(A,q+1,r);
         }
-        return A;
     }
 
     public static int partition(int[] A, int p, int r) {
@@ -85,14 +83,13 @@ public class Uebungsblatt2 {
         return i + 1;
     }
 
-    public static int[] randomizedQuicksort (int[] A, int p, int r) {
+    public static void randomizedQuicksort (int[] A, int p, int r) {
         if (p < r) {
             Analysis.addComparison();
             int q = randomizedPartition(A,p,r);
             randomizedQuicksort(A, p, q-1);
             randomizedQuicksort(A,q+1,r);
         }
-        return A;
     }
 
     public static int randomizedPartition(int[] A, int p, int r) {
@@ -105,14 +102,13 @@ public class Uebungsblatt2 {
         return partition(A,p,r);
     }
 
-    public static int[] customRandomizedQuicksort(int[] A, int p, int r) {
+    public static void customRandomizedQuicksort(int[] A, int p, int r) {
         if (p < r) {
             Analysis.addComparison();
             int q = customRandomizedPartition(A,p,r);
             randomizedQuicksort(A, p, q-1);
             randomizedQuicksort(A,q+1,r);
         }
-        return A;
     }
 
     public static int customRandomizedPartition(int[] A, int p, int r) {
