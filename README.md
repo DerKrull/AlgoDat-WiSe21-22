@@ -1,6 +1,6 @@
 # AlgoDat-WiSe21-22
 
-### Intellij Java-Projekt der Übungen
+# Intellij Java-Projekt der Übungen
 
 Dieses Repo enthält den Sourcecode bzw. alle Implementierungen aus den Übungsblättern.
 
