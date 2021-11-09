@@ -14,7 +14,7 @@ Array-Zugriffe und Vergleiche zu zählen.
 - Übungsblatt 1
   - Linear Search
   - Binary Search
-  - __Insertion Sort__
+  - **Insertion Sort**
   - **Merge Sort**
   - Bubble Sort
   - Auto-generate needed Arrays
