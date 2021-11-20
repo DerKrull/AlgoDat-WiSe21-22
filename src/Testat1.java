@@ -1,14 +1,13 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Random;
 
 public class Testat1 {
 
-    static int[] testArray1 = {10,1000,10000000}; // Länge der Arrays
-    static int[] testArray2 = {100, 1000000, Integer.MAX_VALUE/10000}; // Wertebereich der Test Arrays
+    static int[] testArray1 = {10, 1000, 10000000}; // Länge der Arrays
+    static int[] testArray2 = {100, 1000000, Integer.MAX_VALUE/1000}; // Wertebereich der Test Arrays
     static int[] testArray3 = {0, 10, 50}; // Identische Elemente in %
     static int[] testArray4 = {2, 5, 10}; // Vorsortierung an welchen Stellen die randoms eingefügt wird
 
@@ -16,18 +15,17 @@ public class Testat1 {
         /*
         TODO write output to file
         */
+
         createFile();
         writeToFile("================ Start ===================", "");
-
-        String test = "testarray10";
-        //System.out.println(Arrays.toString(generateTest()));
 
         double[] results = new double[4];
         for(int i = 1; i < 5; i++) {
             for(int j = 1; j < 5; j++) {
                 if(i != j) {
-                for(int x = 0; x < 3; x++) {
-                    for(int y = 0; y < 3; y++) {
+                    for(int x = 0; x < 3; x++) {
+                        for(int y = 0; y < 3; y++) {
+                            System.out.println("" + i + x + " " + j + y);
                             results = runAlgorithms(generateTest(i, x, j, y));
                             writeToFile("" + i + x + " " + j + y, "" + results[0] + " " + results[1] + " " + results[2] + " " + results[3]);
                         }
@@ -160,7 +158,7 @@ public class Testat1 {
 
     public static void createFile() {
         try {
-            File myObj = new File("E:\\OneDrive - Sammlung\\OneDrive - informatik.hs-fulda.de\\3. Semester\\AI1012 - AlgoDat\\Übungen\\Testat 1\\testat1.csv");
+            File myObj = new File("testat1.csv");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -176,7 +174,7 @@ public class Testat1 {
 
     public static void writeToFile(String testcase, String data) {
         try {
-            FileWriter myWriter = new FileWriter("E:\\OneDrive - Sammlung\\OneDrive - informatik.hs-fulda.de\\3. Semester\\AI1012 - AlgoDat\\Übungen\\Testat 1\\testat1.csv", true);
+            FileWriter myWriter = new FileWriter("testat1.csv", true);
             myWriter.write(testcase + " " + data + "\n");
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
@@ -276,21 +274,35 @@ public class Testat1 {
     }
 
     public static double[] runAlgorithms(int[] arr) {
+        int[] sort1 = new int[arr.length];
+        System.arraycopy(arr, 0, sort1, 0, arr.length);
         double timeMerge = System.nanoTime();
-        mergeSort(arr,0, arr.length - 1);
+        mergeSort(sort1,0, sort1.length - 1);
         timeMerge = (System.nanoTime() - timeMerge) / 1000;
 
+        int[] sort2 = new int[arr.length];
+        System.arraycopy(arr, 0, sort2, 0, arr.length);
         double timeQuick = System.nanoTime();
-        randomizedQuicksort(arr,0, arr.length - 1);
-        timeQuick = (System.nanoTime() - timeQuick) / 1000;
+        try {
+            randomizedQuicksort(sort2,0, sort2.length - 1);
+            timeQuick = (System.nanoTime() - timeQuick) / 1000;
+        } catch (StackOverflowError e) {
+            System.out.println("--- StackOverFlow ---");
+            timeQuick = -1;
+        }
 
+
+        int[] sort3 = new int[arr.length];
+        System.arraycopy(arr, 0, sort3, 0, arr.length);
         int[] secondArray = new int[arr.length];
         double timeCount = System.nanoTime();
-        countingSort(arr, secondArray); //TODO
+        countingSort(sort3, secondArray);
         timeCount = (System.nanoTime() - timeCount) / 1000;
 
+        int[] sort4 = new int[arr.length];
+        System.arraycopy(arr, 0, sort4, 0, arr.length);
         double timeHeap = System.nanoTime();
-        heapSort(arr);
+        heapSort(sort4);
         timeHeap = (System.nanoTime() - timeHeap) / 1000;
 
         double[] timeAll = {timeMerge, timeQuick, timeCount, timeHeap};
@@ -335,12 +347,14 @@ public class Testat1 {
         }
     }
 
-    public static void randomizedQuicksort (int[] A, int p, int r) {
-        /*if (p < r) {
+    public static int[] randomizedQuicksort (int[] A, int p, int r) {
+        if (p < r) {
+            Analysis.addComparison();
             int q = randomizedPartition(A,p,r);
             randomizedQuicksort(A, p, q-1);
             randomizedQuicksort(A,q+1,r);
-        }*/
+        }
+        return A;
     }
 
     public static int randomizedPartition(int[] A, int p, int r) {
@@ -349,28 +363,34 @@ public class Testat1 {
         int temp = A[i];
         A[i] = A[r];
         A[r] = temp;
+        Analysis.increaseArrayAccess(3);
         return partition(A,p,r);
     }
 
     public static int partition(int[] A, int p, int r) {
         int x = A[r];
+        Analysis.addArrayAccess();
         int i = p - 1;
         int temp;
         for (int j = p; j < r-1; j++) {
             if (A[j] <= x ) {
+                Analysis.addComparison();
+                Analysis.addArrayAccess();
                 i = i + 1;
                 temp = A[i];
                 A[i] = A[j];
                 A[j] = temp;
+                Analysis.increaseArrayAccess(3);
             }
         }
         temp = A[i+1];
         A[i+1] = A[r];
         A[r] = temp;
+        Analysis.increaseArrayAccess(3);
         return i + 1;
     }
 
-    public static void countingSort (int[] A, int[] B) {
+    public static int[] countingSort (int[] A, int[] B) {
         int k = A[0];
         for(int i = 0; i < A.length; i++) {
             if(A[i] > k ) {
@@ -399,9 +419,10 @@ public class Testat1 {
             B[C[A[j]]] = A[j];
             C[A[j]] = C[A[j]] - 1;
         }
+        return B;
     }
 
-    public static void heapSort(int[] arr) {
+    public static int[] heapSort(int[] arr) {
         buildMaxHeap(arr);
         int heapsize = arr.length;
         for (int i = arr.length - 1; i >= 1; i--) {
@@ -411,6 +432,7 @@ public class Testat1 {
             heapsize = heapsize - 1;
             maxHeapify(arr, 0, heapsize);
         }
+        return arr;
     }
 
     public static void buildMaxHeap(int[] arr) {
@@ -438,3 +460,5 @@ public class Testat1 {
         }
     }
 }
+
+
