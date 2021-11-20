@@ -1,191 +1,293 @@
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class Testat1 {
+
+    static int[] testArray1 = {10,1000,10000000}; // Länge der Arrays
+    static int[] testArray2 = {100, 1000000, Integer.MAX_VALUE}; // Wertebereich der Test Arrays
+    static int[] testArray3 = {0, 10, 50}; // Identische Elemente in %
+    static int[] testArray4 = {2, 5, 10}; // Vorsortierung an welchen Stellen die randoms eingefügt wird
+
     public static void main(String[] args) {
         /*
         TODO write output to file
-         */
-        System.out.println("Algorythm; Merge; Randomized Quick Sort; Counting Sort; Heap Sort");
-        /*
-        ########################################################################
-        #                          Variable Länge                              #
-        ########################################################################
-         */
-        int[] testArray11 = generateArray(10,20,0);
-        int[] testArray12 = generateArray(100, 200, 0);
-        int[] testArray13 = generateArray(1000, 2000, 0);
-        int[] testArray14 = generateArray(10000, 20000, 0);
-        int[] testArray15 = generateArray(100000, 200000, 0);
-        int[] testArray16 = generateArray(1000000, 2000000, 0);
-
-        System.out.println("Variable Länge: 10, 100, 1000, 10000, 100000, 1000000");
-
-        runAlgorythms(testArray11,20);
-        runAlgorythms(testArray12, 200);
-        runAlgorythms(testArray13, 2000);
-        runAlgorythms(testArray14, 20000);
-        runAlgorythms(testArray15, 200000);
-        runAlgorythms(testArray16, 2000000);
-
-        System.out.println();
-        System.out.println();
-
-        /*
-        ########################################################################
-        #                      Variable Wertebereich                           #
-        ########################################################################
-         */
-        int[] testArray21 = generateArray(1000, 1000, 0);
-        int[] testArray22 = generateArray(1000, 10000, 0);
-        int[] testArray23 = generateArray(1000, 100000, 0);
-        int[] testArray24 = generateArray(1000, 1000000, 0);
-        int[] testArray25 = generateArray(1000, 1500000, 0);
-        int[] testArray26 = generateArray(1000, 2000000, 0);
-
-        System.out.println("Variable Wertebereich: 1000, 10000, 100000, 1000000, 1500000, 2000000");
-
-        runAlgorythms(testArray21, 1000);
-        runAlgorythms(testArray22, 10000);
-        runAlgorythms(testArray23, 100000);
-        runAlgorythms(testArray24, 1000000);
-        runAlgorythms(testArray25, 1500000);
-        runAlgorythms(testArray26, 2000000);
-
-        System.out.println();
-        System.out.println();
-
-        /*
-        ########################################################################
-        #              Variable Anzahl identsicher Elemente                    #
-        ########################################################################
         */
-        int[] testArray31 = generateArray(100000, 10, 0);
-        int[] testArray32 = generateArray(100000, 1000, 0);
-        int[] testArray33 = generateArray(100000, 100000, 0);
-        int[] testArray34 = generateArray(100000, 10000000, 0);
+        createFile();
 
-        System.out.println("Variable identische Elemente: " + getIdentical(testArray31) + ", " + getIdentical(testArray32) + ", " + getIdentical(testArray33) + ", "
-                + getIdentical(testArray34));
-
-        runAlgorythms(testArray31, 10);
-        runAlgorythms(testArray32, 1000);
-        runAlgorythms(testArray33, 100000);
-        runAlgorythms(testArray34, 10000000);
-
-        System.out.println();
-        System.out.println();
-
-        /*
-        TODO Define presorted array
-            - 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4
-            - 1 2 5 3 4 10 6 7 20 12 13 14
-         */
-        /*
-        ########################################################################
-        #                    Variable Vorsortierung 1                          #
-        ########################################################################
-
-        int[] testArray41 = generatePartialSortedArray(100000,200000,100000);
-        int[] testArray42 = generatePartialSortedArray(100000,200000,10000);
-        int[] testArray43 = generatePartialSortedArray(100000,200000,1000);
-        int[] testArray44 = generatePartialSortedArray(100000,200000,100);
-        int[] testArray45 = generatePartialSortedArray(100000,200000,10);
-        int[] testArray46 = generatePartialSortedArray(100000,200000,1);
-
-        System.out.println("Variable Vorsortierung: " + getRandomness(testArray41) + ", " + getRandomness(testArray42) + ", " + getRandomness(testArray43) + ", "
-                        + getRandomness(testArray44) + ", " + getRandomness(testArray45) + ", " + getRandomness(testArray46));
-
-        runAlgorythms(testArray41, 200000);
-        runAlgorythms(testArray42, 200000);
-        runAlgorythms(testArray43, 200000);
-        runAlgorythms(testArray44, 200000);
-        runAlgorythms(testArray45, 200000);
-        runAlgorythms(testArray46, 200000);
-        */
-
-    }
-
-    /*
-    TODO define what kind of presorted array to generate
-     */
-    public static int[] generatePartialSortedArray (int count, int bound, int sorted) {
-        int[] arr = new int[count];
-        arr = generateArray(count, bound, 0);
-        for(int i = 0; i < sorted; i++) {
-            Arrays.sort(arr,arr.length/sorted * i,arr.length/sorted * (i+1));
+        for(int i = 1; i < 5; i++) {
+            for(int j = 1; j < 5; j++) {
+                if(i != j) {
+                for(int x = 0; x < 3; x++) {
+                    for(int y = 0; y < 3; y++) {
+                            runAlgorithms(generateTest("testarray" + i + x, "testarray" + j + y));
+                        }
+                    }
+                }
+            }
         }
-        return  arr;
+
+
+
+        writeToFile("Test", "");
+
     }
 
-    public static int[] generateArray(int count, int bound, int bottomBarrier) {
-        int[] arr = new int[count];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = (int)(Math.random()*(bound-bottomBarrier) + bottomBarrier);//note, this generates numbers from [0,9]
+    public static int[] generateTest(String test1, String test2){
+
+        //Default Werte
+        int laenge = 1000;
+        int wertebereich = 1000;
+        int identical = 0;
+        int vorsortiert = 0;
+
+        if(test1.charAt(9) == 1){
+            //Länge
+            if(test2.charAt(9)==1){
+                //Länge  -> Leer
+                return null;
+            }else if(test2.charAt(9) == 2){
+                //Wertebereich
+                laenge = testArray1[test1.charAt(10)];
+                wertebereich = testArray2[test2.charAt(10)];
+
+                int[] res = generateRandomArray(laenge, wertebereich);
+                return res;
+            }else if(test2.charAt(9) == 3){
+                //identische Elemente
+                laenge = testArray1[test1.charAt(10)];
+                identical = testArray3[test2.charAt(10)];
+
+                int[] res = generateIdenticalArray(laenge, identical,wertebereich);
+                return res;
+            }else if(test2.charAt(9) == 4){
+                //Vorsortierung
+                laenge = testArray1[test1.charAt(10)];
+                vorsortiert = testArray4[test2.charAt(10)];
+
+                int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
+                return res;
+            }
+
+        }else if(test1.charAt(9) == 2){
+            //Wertebereich
+            if(test2.charAt(9)==1){
+                //Länge
+                wertebereich = testArray2[test1.charAt(10)];
+                laenge = testArray1[test2.charAt(10)];
+
+                int [] res = generateRandomArray(laenge, wertebereich);
+                return res;
+            }else if(test2.charAt(9) == 2){
+                //Wertebereich -> Leer
+                return null;
+            }else if(test2.charAt(9) == 3){
+                //identische Elemente
+                wertebereich = testArray2[test1.charAt(10)];
+                identical = testArray3[test2.charAt(10)];
+
+                int[] res = generateIdenticalArray(laenge, identical,wertebereich);
+                return res;
+            }else if(test2.charAt(9) == 4){
+                //Vorsortierung
+                wertebereich = testArray2[test1.charAt(10)];
+                vorsortiert = testArray4[test2.charAt(10)];
+
+                int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
+                return res;
+            }
+        }else if(test1.charAt(9) == 3){
+            //identische Elemente
+            if(test2.charAt(9)==1){
+                //Länge
+                identical = testArray3[test1.charAt(10)];
+                laenge = testArray1[test2.charAt(10)];
+
+                int[] res = generateIdenticalArray(laenge, identical,wertebereich);
+                return res;
+            }else if(test2.charAt(9) == 2){
+                //Wertebereich
+                identical = testArray3[test1.charAt(10)];
+                wertebereich = testArray2[test2.charAt(10)];
+
+                int[] res = generateIdenticalArray(laenge, identical,wertebereich);
+                return res;
+            }else if(test2.charAt(9) == 3){
+                //identische Elemente -> Leer
+                return null;
+            }else if(test2.charAt(9) == 4){
+                //Vorsortierung
+                identical = testArray3[test1.charAt(10)];
+                vorsortiert = testArray4[test2.charAt(10)];
+
+                int[] res = combinedTest(laenge, identical, wertebereich, vorsortiert);
+                return res;
+            }
+        }else if(test1.charAt(9) == 4){
+            //Vorsortierung
+            if(test2.charAt(9)==1){
+                //Länge
+                vorsortiert = testArray4[test1.charAt(10)];
+                laenge = testArray1[test2.charAt(10)];
+
+                int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
+                return res;
+            }else if(test2.charAt(9) == 2){
+                //Wertebereich
+                vorsortiert = testArray4[test1.charAt(10)];
+                wertebereich = testArray2[test2.charAt(10)];
+
+                int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
+                return res;
+            }else if(test2.charAt(9) == 3){
+                //identische Elemente
+                vorsortiert = testArray4[test1.charAt(10)];
+                identical = testArray3[test2.charAt(10)];
+
+                int[] res = combinedTest(laenge, identical, wertebereich, vorsortiert);
+                return res;
+            }else if(test2.charAt(9) == 4){
+                //Vorsortierung -> Leer
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public static void createFile() {
+        try {
+            File myObj = new File("E:\\OneDrive - Sammlung\\OneDrive - informatik.hs-fulda.de\\3. Semester\\AI1012 - AlgoDat\\Übungen\\Testat 1\\testat1.csv");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeToFile(String testcase, String data) {
+        try {
+            FileWriter myWriter = new FileWriter("E:\\OneDrive - Sammlung\\OneDrive - informatik.hs-fulda.de\\3. Semester\\AI1012 - AlgoDat\\Übungen\\Testat 1\\testat1.csv", true);
+            myWriter.write(testcase);
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public static int[] combinedTest(int amount, int percentageIdentical, int maxRandomNumber, int randomLevel) {
+        int[] arr1 = generateIdenticalArray(amount/2, percentageIdentical, maxRandomNumber);
+        int[] arr2 = generatePartialSortedArray(amount/2, 0, maxRandomNumber, randomLevel);
+        int[] res = new int[amount];
+        int j = 0;
+        int k = 0;
+        for(int i = 0; i < res.length; i++) {
+            if (i % 2 == 0) {
+                res[i] = arr1[j];
+                j++;
+            } else {
+                res[i] = arr2[k];
+                k++;
+            }
+        }
+        return res;
+    }
+
+    public static int[] generateIdenticalArray(int amount, int percentageIdentical, int maxRandomNumber) {
+        if(percentageIdentical > 100 || percentageIdentical < 0) {
+            System.out.println("Percentage Identical has to be between 0 and 100");
+            System.exit(42);
+        }
+
+        int inputIdentical = 100/percentageIdentical;
+        int identicalAmount = amount / inputIdentical;
+        int restAmount = amount - identicalAmount;
+
+        int[] percentageIdenticalArray = new int[identicalAmount];
+        int randomNumber = (int) Math.floor(Math.random() * (maxRandomNumber));
+        for(int i = 0; i < percentageIdenticalArray.length; i++) {
+            percentageIdenticalArray[i] = randomNumber;
+        }
+
+        int[] restArray = generateRandomArray(restAmount, maxRandomNumber);
+        int[] result = new int[amount];
+        int j = 0;
+        int k = 0;
+        for(int i = 0; i < result.length; i++) {
+            if(i % inputIdentical == inputIdentical - 1) {
+                result[i] = percentageIdenticalArray[j];
+                j++;
+            } else {
+                result[i] = restArray[k];
+                k++;
+            }
+        }
+        return result;
+    }
+
+    public static int[] generatePartialSortedArray(int amount, int startSorted, int maxRandomNumber, int randomLevel) {
+        int[] arrSorted = generateSortedArray(amount, startSorted);
+        int[] arrRandom = generateRandomArray(amount, maxRandomNumber);
+        int[] arrMixed = new int[amount];
+        int j = 0;
+        int k = 0;
+        for(int i = 0; i < amount; i++) {
+            if(i % randomLevel == randomLevel - 1) {
+                arrMixed[i] = arrRandom[j];
+                j++;
+            } else {
+                arrMixed[i] = arrSorted[k];
+                k++;
+            }
+        }
+
+        return arrMixed;
+    }
+
+    public static int [] generateSortedArray(int amount, int startSorted) {
+        int[] arr = new int[amount];
+        int i = 0;
+        for(int j = startSorted; j < amount + startSorted; j++) {
+            arr[i] = j;
+            i++;
         }
         return arr;
     }
 
-    /*
-    TODO how to measure to what degree an array is sorted?
-     */
-    public static double getRandomness(int[] arr) {
-        int counter = 0;
-        for(int i = 0; i < arr.length - 1; i++) {
-            if (arr[i] > arr[i+1]) {
-                counter++;
-            }
-        }
-        return counter;
-    }
-
-    public static double getIdentical(int[] arr) {
-        int counter = 0;
-        int[] elements = new int[arr.length];
+    public static int[] generateRandomArray(int amount, int maxRandomNumber) {
+        int[] arr = new int[amount];
         for (int i = 0; i < arr.length; i++) {
-            elements[i] = arr[i];
+            arr[i] = (int)(Math.random()*(maxRandomNumber));//note, this generates numbers from [0,9]
         }
-        Arrays.sort(elements);
-        for(int i = 0; i < elements.length - 1; i++) {
-            if(elements[i] == elements[i+1]) {
-                counter++;
-            }
-        }
-        return counter;
+        return arr;
     }
 
-    public static void runAlgorythms (int[] arr, int bound) {
-        double switches = getRandomness(arr);
-        double identical = getIdentical(arr);
-        //System.out.println(Arrays.toString(arr));
-
+    public static double[] runAlgorithms(int[] arr) {
         double timeMerge = System.nanoTime();
         mergeSort(arr,0, arr.length - 1);
-        timeMerge = System.nanoTime() - timeMerge;
+        timeMerge = System.nanoTime() - timeMerge / 1000;
 
         double timeQuick = System.nanoTime();
         randomizedQuicksort(arr,0, arr.length - 1);
-        timeQuick = System.nanoTime() - timeQuick;
+        timeQuick = System.nanoTime() - timeQuick / 1000;
 
         int[] secondArray = new int[arr.length];
         double timeCount = System.nanoTime();
-        countingSort(arr, secondArray, bound);
-        timeCount = System.nanoTime() - timeCount;
+        countingSort(arr, secondArray, bound); //TODO
+        timeCount = System.nanoTime() - timeCount / 1000;
 
         double timeHeap = System.nanoTime();
         heapSort(arr);
-        timeHeap = System.nanoTime() - timeHeap;
+        timeHeap = System.nanoTime() - timeHeap / 1000;
 
-        /*
-        Ausgabe für die Konsole
-         */
-        //System.out.println("Array: Länge: " + arr.length + " - Vorsortierung (benötigte Vertauschungen): " + switches + " - Wertebereich: " + bound + " - identische Elemente: " + identical);
-        //System.out.println("Merge | Randomized Quick | Counting | Heap ");
-        //System.out.println(timeMerge/1000 + " | " + timeQuick/1000 + " | " + timeCount/1000 + " | " + timeHeap/1000);
-
-        /*
-        TODO Output for file and write it to file
-         */
+        double[] timeAll = {timeMerge, timeQuick, timeCount, timeHeap};
+        return timeAll;
     }
 
     public static int[] mergeSort(int[] arr, int startSort, int endSort) {
