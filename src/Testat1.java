@@ -1,12 +1,14 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLOutput;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Testat1 {
 
     static int[] testArray1 = {10,1000,10000000}; // Länge der Arrays
-    static int[] testArray2 = {100, 1000000, Integer.MAX_VALUE}; // Wertebereich der Test Arrays
+    static int[] testArray2 = {100, 1000000, Integer.MAX_VALUE/10000}; // Wertebereich der Test Arrays
     static int[] testArray3 = {0, 10, 50}; // Identische Elemente in %
     static int[] testArray4 = {2, 5, 10}; // Vorsortierung an welchen Stellen die randoms eingefügt wird
 
@@ -15,26 +17,27 @@ public class Testat1 {
         TODO write output to file
         */
         createFile();
+        writeToFile("================ Start ===================", "");
 
+        String test = "testarray10";
+        //System.out.println(Arrays.toString(generateTest()));
+
+        double[] results = new double[4];
         for(int i = 1; i < 5; i++) {
             for(int j = 1; j < 5; j++) {
                 if(i != j) {
                 for(int x = 0; x < 3; x++) {
                     for(int y = 0; y < 3; y++) {
-                            runAlgorithms(generateTest("testarray" + i + x, "testarray" + j + y));
+                            results = runAlgorithms(generateTest(i, x, j, y));
+                            writeToFile("" + i + x + " " + j + y, "" + results[0] + " " + results[1] + " " + results[2] + " " + results[3]);
                         }
                     }
                 }
             }
         }
-
-
-
-        writeToFile("Test", "");
-
     }
 
-    public static int[] generateTest(String test1, String test2){
+    public static int[] generateTest(int i1, int i2, int j1, int j2){
 
         //Default Werte
         int laenge = 1000;
@@ -42,112 +45,112 @@ public class Testat1 {
         int identical = 0;
         int vorsortiert = 0;
 
-        if(test1.charAt(9) == 1){
+        if(i1 == 1){
             //Länge
-            if(test2.charAt(9)==1){
+            if(j1 == 1){
                 //Länge  -> Leer
                 return null;
-            }else if(test2.charAt(9) == 2){
+            }else if(j1 == 2){
                 //Wertebereich
-                laenge = testArray1[test1.charAt(10)];
-                wertebereich = testArray2[test2.charAt(10)];
+                laenge = testArray1[i2];
+                wertebereich = testArray2[j2];
 
                 int[] res = generateRandomArray(laenge, wertebereich);
                 return res;
-            }else if(test2.charAt(9) == 3){
+            }else if(j1 == 3){
                 //identische Elemente
-                laenge = testArray1[test1.charAt(10)];
-                identical = testArray3[test2.charAt(10)];
+                laenge = testArray1[i2];
+                identical = testArray3[j2];
 
                 int[] res = generateIdenticalArray(laenge, identical,wertebereich);
                 return res;
-            }else if(test2.charAt(9) == 4){
+            }else if(j1 == 4){
                 //Vorsortierung
-                laenge = testArray1[test1.charAt(10)];
-                vorsortiert = testArray4[test2.charAt(10)];
+                laenge = testArray1[i2];
+                vorsortiert = testArray4[j2];
 
                 int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
                 return res;
             }
 
-        }else if(test1.charAt(9) == 2){
+        }else if(i1 == 2){
             //Wertebereich
-            if(test2.charAt(9)==1){
+            if(j1== 1){
                 //Länge
-                wertebereich = testArray2[test1.charAt(10)];
-                laenge = testArray1[test2.charAt(10)];
+                wertebereich = testArray2[i2];
+                laenge = testArray1[j2];
 
                 int [] res = generateRandomArray(laenge, wertebereich);
                 return res;
-            }else if(test2.charAt(9) == 2){
+            }else if(j1 == 2 ){
                 //Wertebereich -> Leer
                 return null;
-            }else if(test2.charAt(9) == 3){
+            }else if(j1 == 3){
                 //identische Elemente
-                wertebereich = testArray2[test1.charAt(10)];
-                identical = testArray3[test2.charAt(10)];
+                wertebereich = testArray2[i2];
+                identical = testArray3[j2];
 
                 int[] res = generateIdenticalArray(laenge, identical,wertebereich);
                 return res;
-            }else if(test2.charAt(9) == 4){
+            }else if(j1 == 4){
                 //Vorsortierung
-                wertebereich = testArray2[test1.charAt(10)];
-                vorsortiert = testArray4[test2.charAt(10)];
+                wertebereich = testArray2[i2];
+                vorsortiert = testArray4[j2];
 
                 int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
                 return res;
             }
-        }else if(test1.charAt(9) == 3){
+        }else if(i1  == 3){
             //identische Elemente
-            if(test2.charAt(9)==1){
+            if(j1== 1){
                 //Länge
-                identical = testArray3[test1.charAt(10)];
-                laenge = testArray1[test2.charAt(10)];
+                identical = testArray3[i2];
+                laenge = testArray1[j2];
 
                 int[] res = generateIdenticalArray(laenge, identical,wertebereich);
                 return res;
-            }else if(test2.charAt(9) == 2){
+            }else if(j1 == 2){
                 //Wertebereich
-                identical = testArray3[test1.charAt(10)];
-                wertebereich = testArray2[test2.charAt(10)];
+                identical = testArray3[i2];
+                wertebereich = testArray2[j2];
 
                 int[] res = generateIdenticalArray(laenge, identical,wertebereich);
                 return res;
-            }else if(test2.charAt(9) == 3){
+            }else if(j1 == 3){
                 //identische Elemente -> Leer
                 return null;
-            }else if(test2.charAt(9) == 4){
+            }else if(j1 == 4){
                 //Vorsortierung
-                identical = testArray3[test1.charAt(10)];
-                vorsortiert = testArray4[test2.charAt(10)];
+                identical = testArray3[i2];
+                vorsortiert = testArray4[j2];
 
                 int[] res = combinedTest(laenge, identical, wertebereich, vorsortiert);
                 return res;
             }
-        }else if(test1.charAt(9) == 4){
+        }else if(i1 == 4){
             //Vorsortierung
-            if(test2.charAt(9)==1){
+            if(j1==1){
                 //Länge
-                vorsortiert = testArray4[test1.charAt(10)];
-                laenge = testArray1[test2.charAt(10)];
+                vorsortiert = testArray4[i2];
+                laenge = testArray1[j2];
 
                 int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
                 return res;
-            }else if(test2.charAt(9) == 2){
+            }else if(j1 == 2){
                 //Wertebereich
-                vorsortiert = testArray4[test1.charAt(10)];
-                wertebereich = testArray2[test2.charAt(10)];
+                vorsortiert = testArray4[i2];
+                wertebereich = testArray2[j2];
 
                 int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
                 return res;
-            }else if(test2.charAt(9) == 3){
+            }else if(j1 == 3){
                 //identische Elemente
-                vorsortiert = testArray4[test1.charAt(10)];
-                identical = testArray3[test2.charAt(10)];
+                vorsortiert = testArray4[i2];
+                identical = testArray3[j2];
 
                 int[] res = combinedTest(laenge, identical, wertebereich, vorsortiert);
                 return res;
-            }else if(test2.charAt(9) == 4){
+            }else if(j1 == 4){
                 //Vorsortierung -> Leer
                 return null;
             }
@@ -162,6 +165,8 @@ public class Testat1 {
                 System.out.println("File created: " + myObj.getName());
             } else {
                 System.out.println("File already exists.");
+                myObj.delete();
+                createFile();
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -172,7 +177,7 @@ public class Testat1 {
     public static void writeToFile(String testcase, String data) {
         try {
             FileWriter myWriter = new FileWriter("E:\\OneDrive - Sammlung\\OneDrive - informatik.hs-fulda.de\\3. Semester\\AI1012 - AlgoDat\\Übungen\\Testat 1\\testat1.csv", true);
-            myWriter.write(testcase);
+            myWriter.write(testcase + " " + data + "\n");
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -204,7 +209,9 @@ public class Testat1 {
             System.out.println("Percentage Identical has to be between 0 and 100");
             System.exit(42);
         }
-
+        if(percentageIdentical == 0) {
+            percentageIdentical = 1;
+        }
         int inputIdentical = 100/percentageIdentical;
         int identicalAmount = amount / inputIdentical;
         int restAmount = amount - identicalAmount;
@@ -271,20 +278,20 @@ public class Testat1 {
     public static double[] runAlgorithms(int[] arr) {
         double timeMerge = System.nanoTime();
         mergeSort(arr,0, arr.length - 1);
-        timeMerge = System.nanoTime() - timeMerge / 1000;
+        timeMerge = (System.nanoTime() - timeMerge) / 1000;
 
         double timeQuick = System.nanoTime();
         randomizedQuicksort(arr,0, arr.length - 1);
-        timeQuick = System.nanoTime() - timeQuick / 1000;
+        timeQuick = (System.nanoTime() - timeQuick) / 1000;
 
         int[] secondArray = new int[arr.length];
         double timeCount = System.nanoTime();
-        countingSort(arr, secondArray, bound); //TODO
-        timeCount = System.nanoTime() - timeCount / 1000;
+        countingSort(arr, secondArray); //TODO
+        timeCount = (System.nanoTime() - timeCount) / 1000;
 
         double timeHeap = System.nanoTime();
         heapSort(arr);
-        timeHeap = System.nanoTime() - timeHeap / 1000;
+        timeHeap = (System.nanoTime() - timeHeap) / 1000;
 
         double[] timeAll = {timeMerge, timeQuick, timeCount, timeHeap};
         return timeAll;
@@ -329,11 +336,11 @@ public class Testat1 {
     }
 
     public static void randomizedQuicksort (int[] A, int p, int r) {
-        if (p < r) {
+        /*if (p < r) {
             int q = randomizedPartition(A,p,r);
             randomizedQuicksort(A, p, q-1);
             randomizedQuicksort(A,q+1,r);
-        }
+        }*/
     }
 
     public static int randomizedPartition(int[] A, int p, int r) {
@@ -363,8 +370,14 @@ public class Testat1 {
         return i + 1;
     }
 
-    public static void countingSort (int[] A, int[] B, int k) {
-        int[] C = new int[k];
+    public static void countingSort (int[] A, int[] B) {
+        int k = A[0];
+        for(int i = 0; i < A.length; i++) {
+            if(A[i] > k ) {
+                k = A[i];
+            }
+        }
+        int[] C = new int[k+1];
 
         // Count different Numbers in A
         for (int value : A) {  //for(int j = 0; j < A.length; j++) {
