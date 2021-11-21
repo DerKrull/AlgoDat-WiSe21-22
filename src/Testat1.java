@@ -17,7 +17,7 @@ public class Testat1 {
         */
 
         createFile();
-        writeToFile("================ Start ===================", "");
+        writeToFile("================ Start", "Merge-Sort Quick-Sort Counting-Sort Heap-Sort");
 
         double[] results = new double[4];
         for(int i = 1; i < 5; i++) {
