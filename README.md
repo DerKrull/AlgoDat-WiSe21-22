@@ -35,3 +35,15 @@ Array-Zugriffe und Vergleiche zu zählen.
     - Radix-Counting Sort (customized to use with Radix Sort)
   - *Quick Sort (for Comparison)*
   - Auto-generate needed Arrays (added Bottom Barrier to generate Numbers with the same length)
+
+- Übungsblatt 4
+  - **Heap Sort**
+  - **Build Max Heap**
+  - **Max-Heapify**
+  - Auto-generate needed Arrays
+
+# Übersicht der Testate
+
+- Testat 1
+  - **writeToFile** for generating a CSV
+  - 
