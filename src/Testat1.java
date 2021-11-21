@@ -12,9 +12,6 @@ public class Testat1 {
   static int[] gradVorsortierung = {2, 5, 10}; // Vorsortierung an welchen Stellen die randoms eingefügt wird
 
   public static void main(String[] args) {
-        /*
-        TODO write output to file
-        */
 
     createFile();
     writeToFile("================ Start", "Merge-Sort Quick-Sort Counting-Sort Heap-Sort");
@@ -158,7 +155,7 @@ public class Testat1 {
 
   public static void createFile() {
     try {
-      File myObj = new File("testat1.csv");
+      File myObj = new File("testat1.txt");
       if (myObj.createNewFile()) {
         System.out.println("File created: " + myObj.getName());
       } else {
@@ -174,7 +171,7 @@ public class Testat1 {
 
   public static void writeToFile(String testcase, String data) {
     try {
-      FileWriter myWriter = new FileWriter("testat1.csv", true);
+      FileWriter myWriter = new FileWriter("testat1.txt", true);
       myWriter.write(testcase + " " + data + "\n");
       myWriter.close();
       System.out.println("Successfully wrote to the file.");
@@ -349,7 +346,6 @@ public class Testat1 {
 
   public static int[] randomizedQuicksort(int[] A, int p, int r) {
     if (p < r) {
-      Analysis.addComparison();
       int q = randomizedPartition(A, p, r);
       randomizedQuicksort(A, p, q - 1);
       randomizedQuicksort(A, q + 1, r);
@@ -363,30 +359,24 @@ public class Testat1 {
     int temp = A[i];
     A[i] = A[r];
     A[r] = temp;
-    Analysis.increaseArrayAccess(3);
     return partition(A, p, r);
   }
 
   public static int partition(int[] A, int p, int r) {
     int x = A[r];
-    Analysis.addArrayAccess();
     int i = p - 1;
     int temp;
     for (int j = p; j < r - 1; j++) {
       if (A[j] <= x) {
-        Analysis.addComparison();
-        Analysis.addArrayAccess();
         i = i + 1;
         temp = A[i];
         A[i] = A[j];
         A[j] = temp;
-        Analysis.increaseArrayAccess(3);
       }
     }
     temp = A[i + 1];
     A[i + 1] = A[r];
     A[r] = temp;
-    Analysis.increaseArrayAccess(3);
     return i + 1;
   }
 
