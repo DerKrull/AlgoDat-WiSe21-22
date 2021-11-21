@@ -12,12 +12,12 @@ public class Testat1 {
     static int[] testArray4 = {2, 5, 10}; // Vorsortierung an welchen Stellen die randoms eingefügt wird
 
     public static void main(String[] args) {
-        /*
-        TODO write output to file
-        */
+        //Run algorithm two alocate memory
+        int[] test = generateRandomArray(10,100);
+        mergeSort(test,0,0);
 
         createFile();
-        writeToFile("================ Start ===================", "");
+        writeToFile("================Start===================", "");
 
         double[] results = new double[4];
         for(int i = 1; i < 5; i++) {
@@ -33,6 +33,8 @@ public class Testat1 {
                 }
             }
         }
+
+        writeToFile("================Finished===================", "");
     }
 
     public static int[] generateTest(int i1, int i2, int j1, int j2){
@@ -158,7 +160,7 @@ public class Testat1 {
 
     public static void createFile() {
         try {
-            File myObj = new File("testat1.csv");
+            File myObj = new File("testat1.txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -174,7 +176,7 @@ public class Testat1 {
 
     public static void writeToFile(String testcase, String data) {
         try {
-            FileWriter myWriter = new FileWriter("testat1.csv", true);
+            FileWriter myWriter = new FileWriter("testat1.txt", true);
             myWriter.write(testcase + " " + data + "\n");
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
