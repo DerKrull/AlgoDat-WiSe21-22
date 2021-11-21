@@ -7,12 +7,14 @@ import java.util.Random;
 public class Testat1 {
 
   static int[] verLaengen = {10, 1000, 10000000}; // Länge der Arrays
-  static int[] verWertebereiche = {100, 1000000, Integer.MAX_VALUE / 1000}; // Wertebereich der Test Arrays
+  static int[] verWertebereiche = {100, 1000000, Integer.MAX_VALUE / 10}; // Wertebereich der Test Arrays
   static int[] prozentIdentisch = {0, 10, 50}; // Identische Elemente in %
   static int[] gradVorsortierung = {2, 5, 10}; // Vorsortierung an welchen Stellen die randoms eingefügt wird
 
   public static void main(String[] args) {
-
+    //Run algorithm to alocate memory
+    int[] test = generateRandomArray(10,100);
+    mergeSort(test,0,0);
     createFile();
     writeToFile("================ Start", "Merge-Sort Quick-Sort Counting-Sort Heap-Sort");
 
@@ -29,6 +31,7 @@ public class Testat1 {
           }
         }
       }
+      writeToFile("================Finished===================", "");
     }
   }
 
@@ -49,7 +52,6 @@ public class Testat1 {
         //Wertebereich
         laenge = verLaengen[valAttr1];
         wertebereich = verWertebereiche[valAttr2];
-
         int[] res = generateRandomArray(laenge, wertebereich);
         return res;
       } else if (attr2 == 3) {
@@ -155,17 +157,17 @@ public class Testat1 {
 
   public static void createFile() {
     try {
-      File myObj = new File("testat1.txt");
-      if (myObj.createNewFile()) {
-        System.out.println("File created: " + myObj.getName());
-      } else {
-        System.out.println("File already exists.");
-        myObj.delete();
-        createFile();
-      }
+        File myObj = new File("testat1.txt");
+        if (myObj.createNewFile()) {
+            System.out.println("File created: " + myObj.getName());
+        } else {
+            System.out.println("File already exists.");
+            myObj.delete();
+            createFile();
+        }
     } catch (IOException e) {
-      System.out.println("An error occurred.");
-      e.printStackTrace();
+        System.out.println("An error occurred.");
+        e.printStackTrace();
     }
   }
 
@@ -176,8 +178,8 @@ public class Testat1 {
       myWriter.close();
       System.out.println("Successfully wrote to the file.");
     } catch (IOException e) {
-      System.out.println("An error occurred.");
-      e.printStackTrace();
+        System.out.println("An error occurred.");
+        e.printStackTrace();
     }
   }
 
