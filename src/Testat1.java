@@ -7,9 +7,9 @@ import java.util.Random;
 public class Testat1 {
 
   static int[] verLaengen = {10, 1000, 10000000}; // Länge der Arrays
-  static int[] verWertebereiche = {100, 1000000, Integer.MAX_VALUE / 10}; // Wertebereich der Test Arrays
+  static int[] verWertebereiche = {1000, 1000000, Integer.MAX_VALUE / 10}; // Wertebereich der Test Arrays
   static int[] prozentIdentisch = {0, 10, 50}; // Identische Elemente in %
-  static int[] gradVorsortierung = {2, 5, 10}; // Vorsortierung an welchen Stellen die randoms eingefügt wird
+  static int[] gradVorsortierung = {2, 4, 10}; // Vorsortierung an welchen Stellen die randoms eingefügt wird
 
   public static void main(String[] args) {
     //Run algorithm to alocate memory
@@ -31,8 +31,8 @@ public class Testat1 {
           }
         }
       }
-      writeToFile("================Finished===================", "");
     }
+    writeToFile("================Finished===================", "");
   }
 
   public static int[] generateTest(int attr1, int valAttr1, int attr2, int valAttr2) {
