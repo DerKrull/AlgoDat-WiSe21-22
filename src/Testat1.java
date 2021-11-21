@@ -20,14 +20,14 @@ public class Testat1 {
         writeToFile("================ Start", "Merge-Sort Quick-Sort Counting-Sort Heap-Sort");
 
         double[] results = new double[4];
-        for(int i = 1; i < 5; i++) {
-            for(int j = 1; j < 5; j++) {
-                if(i != j) {
-                    for(int x = 0; x < 3; x++) {
-                        for(int y = 0; y < 3; y++) {
-                            System.out.println("" + i + x + " " + j + y);
-                            results = runAlgorithms(generateTest(i, x, j, y));
-                            writeToFile("" + i + x + " " + j + y, "" + results[0] + " " + results[1] + " " + results[2] + " " + results[3]);
+        for(int attr1 = 1; attr1 < 5; attr1++) {
+            for(int attr2 = 1; attr2 < 5; attr2++) {
+                if(attr1 != attr2) {
+                    for(int valAttr1 = 0; valAttr1 < 3; valAttr1++) {
+                        for(int valAttr2 = 0; valAttr2 < 3; valAttr2++) {
+                            System.out.println("" + attr1 + valAttr1 + " " + attr2 + valAttr2);
+                            results = runAlgorithms(generateTest(attr1, valAttr1, attr2, valAttr2));
+                            writeToFile("" + attr1 + valAttr1 + " " + attr2 + valAttr2, "" + results[0] + " " + results[1] + " " + results[2] + " " + results[3]);
                         }
                     }
                 }
