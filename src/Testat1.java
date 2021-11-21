@@ -6,10 +6,10 @@ import java.util.Random;
 
 public class Testat1 {
 
-    static int[] testArray1 = {10, 1000, 10000000}; // Länge der Arrays
-    static int[] testArray2 = {100, 1000000, Integer.MAX_VALUE/1000}; // Wertebereich der Test Arrays
-    static int[] testArray3 = {0, 10, 50}; // Identische Elemente in %
-    static int[] testArray4 = {2, 5, 10}; // Vorsortierung an welchen Stellen die randoms eingefügt wird
+    static int[] verLaengen = {10, 1000, 10000000}; // Länge der Arrays
+    static int[] verWertebereiche = {100, 1000000, Integer.MAX_VALUE/1000}; // Wertebereich der Test Arrays
+    static int[] prozentIdentisch = {0, 10, 50}; // Identische Elemente in %
+    static int[] gradVorsortierung = {2, 5, 10}; // Vorsortierung an welchen Stellen die randoms eingefügt wird
 
     public static void main(String[] args) {
         /*
@@ -35,7 +35,7 @@ public class Testat1 {
         }
     }
 
-    public static int[] generateTest(int i1, int i2, int j1, int j2){
+    public static int[] generateTest(int attr1, int valAttr1, int attr2, int ValAttr2){
 
         //Default Werte
         int laenge = 1000;
@@ -43,112 +43,112 @@ public class Testat1 {
         int identical = 0;
         int vorsortiert = 0;
 
-        if(i1 == 1){
+        if(attr1 == 1){
             //Länge
-            if(j1 == 1){
+            if(attr2 == 1){
                 //Länge  -> Leer
                 return null;
-            }else if(j1 == 2){
+            }else if(attr2 == 2){
                 //Wertebereich
-                laenge = testArray1[i2];
-                wertebereich = testArray2[j2];
+                laenge = verLaengen[valAttr1];
+                wertebereich = verWertebereiche[ValAttr2];
 
                 int[] res = generateRandomArray(laenge, wertebereich);
                 return res;
-            }else if(j1 == 3){
+            }else if(attr2 == 3){
                 //identische Elemente
-                laenge = testArray1[i2];
-                identical = testArray3[j2];
+                laenge = verLaengen[valAttr1];
+                identical = prozentIdentisch[ValAttr2];
 
                 int[] res = generateIdenticalArray(laenge, identical,wertebereich);
                 return res;
-            }else if(j1 == 4){
+            }else if(attr2 == 4){
                 //Vorsortierung
-                laenge = testArray1[i2];
-                vorsortiert = testArray4[j2];
+                laenge = verLaengen[valAttr1];
+                vorsortiert = gradVorsortierung[ValAttr2];
 
                 int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
                 return res;
             }
 
-        }else if(i1 == 2){
+        }else if(attr1 == 2){
             //Wertebereich
-            if(j1== 1){
+            if(attr2== 1){
                 //Länge
-                wertebereich = testArray2[i2];
-                laenge = testArray1[j2];
+                wertebereich = verWertebereiche[valAttr1];
+                laenge = verLaengen[ValAttr2];
 
                 int [] res = generateRandomArray(laenge, wertebereich);
                 return res;
-            }else if(j1 == 2 ){
+            }else if(attr2 == 2 ){
                 //Wertebereich -> Leer
                 return null;
-            }else if(j1 == 3){
+            }else if(attr2 == 3){
                 //identische Elemente
-                wertebereich = testArray2[i2];
-                identical = testArray3[j2];
+                wertebereich = verWertebereiche[valAttr1];
+                identical = prozentIdentisch[ValAttr2];
 
                 int[] res = generateIdenticalArray(laenge, identical,wertebereich);
                 return res;
-            }else if(j1 == 4){
+            }else if(attr2 == 4){
                 //Vorsortierung
-                wertebereich = testArray2[i2];
-                vorsortiert = testArray4[j2];
+                wertebereich = verWertebereiche[valAttr1];
+                vorsortiert = gradVorsortierung[ValAttr2];
 
                 int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
                 return res;
             }
-        }else if(i1  == 3){
+        }else if(attr1  == 3){
             //identische Elemente
-            if(j1== 1){
+            if(attr2== 1){
                 //Länge
-                identical = testArray3[i2];
-                laenge = testArray1[j2];
+                identical = prozentIdentisch[valAttr1];
+                laenge = verLaengen[ValAttr2];
 
                 int[] res = generateIdenticalArray(laenge, identical,wertebereich);
                 return res;
-            }else if(j1 == 2){
+            }else if(attr2 == 2){
                 //Wertebereich
-                identical = testArray3[i2];
-                wertebereich = testArray2[j2];
+                identical = prozentIdentisch[valAttr1];
+                wertebereich = verWertebereiche[ValAttr2];
 
                 int[] res = generateIdenticalArray(laenge, identical,wertebereich);
                 return res;
-            }else if(j1 == 3){
+            }else if(attr2 == 3){
                 //identische Elemente -> Leer
                 return null;
-            }else if(j1 == 4){
+            }else if(attr2 == 4){
                 //Vorsortierung
-                identical = testArray3[i2];
-                vorsortiert = testArray4[j2];
+                identical = prozentIdentisch[valAttr1];
+                vorsortiert = gradVorsortierung[ValAttr2];
 
                 int[] res = combinedTest(laenge, identical, wertebereich, vorsortiert);
                 return res;
             }
-        }else if(i1 == 4){
+        }else if(attr1 == 4){
             //Vorsortierung
-            if(j1==1){
+            if(attr2==1){
                 //Länge
-                vorsortiert = testArray4[i2];
-                laenge = testArray1[j2];
+                vorsortiert = gradVorsortierung[valAttr1];
+                laenge = verLaengen[ValAttr2];
 
                 int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
                 return res;
-            }else if(j1 == 2){
+            }else if(attr2 == 2){
                 //Wertebereich
-                vorsortiert = testArray4[i2];
-                wertebereich = testArray2[j2];
+                vorsortiert = gradVorsortierung[valAttr1];
+                wertebereich = verWertebereiche[ValAttr2];
 
                 int[] res = generatePartialSortedArray(laenge, 0, wertebereich, vorsortiert);
                 return res;
-            }else if(j1 == 3){
+            }else if(attr2 == 3){
                 //identische Elemente
-                vorsortiert = testArray4[i2];
-                identical = testArray3[j2];
+                vorsortiert = gradVorsortierung[valAttr1];
+                identical = prozentIdentisch[ValAttr2];
 
                 int[] res = combinedTest(laenge, identical, wertebereich, vorsortiert);
                 return res;
-            }else if(j1 == 4){
+            }else if(attr2 == 4){
                 //Vorsortierung -> Leer
                 return null;
             }
